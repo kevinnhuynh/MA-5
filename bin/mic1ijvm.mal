@@ -237,6 +237,6 @@ in1	OPC=H=-1
 	MAR=SP=SP+1			// increment SP; wait for read
 	TOS=MDR;wr ; goto Main1		// Write 
 
-ineg1	H = TOS			// 
-ineg2	MAR = SP			// 
-ineg3	TOS = MDR = -H; wr; goto Main1	// 
+ineg1	H = TOS			// Puts TOS in memory location
+ineg2	MAR = SP			// Store the value SP is pointing to into MAR (Memory)
+ineg3	TOS = MDR = -H; wr; goto Main1	// Negates value on top  of stack and returns to Main1

@@ -20,9 +20,9 @@ test.jas:		Tests:	power
 
 ijvm.conf:		Add "0x74 ineg" ***DONE***
 			Comment line 26 ***DONE***
-			Add power call
-			Add ifeven call
-			Comment on implemented lines
+			Add power call ***DONE***
+			Add ifeven call ***DONE***
+			Comment on implemented lines ***DONE***
 
 mic1ijvm.mal:		Add "ineg1 H = TOS
 			     ineg2 MAR = SP
@@ -33,4 +33,3 @@ mic1ijvm.mal:		Add "ineg1 H = TOS
 			Add ifeven <offset(16-bit)> method
 			ifeven <offset(16-bit)>:	Pops top value on stack and if value is even, branch to offset(16-bit)
 			Comment on implemented lines
-			

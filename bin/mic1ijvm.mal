@@ -44,6 +44,8 @@
 .label	out1		0xFD
 .label	in1		0xFC
 .label	ineg1		0x74
+.label	ifeven1		0xAE
+.label	power1		0xAF
 
 // default instruction to place in any unused addresses of the control store
 .default	goto err1
@@ -237,6 +239,23 @@ in1	OPC=H=-1
 	MAR=SP=SP+1			// increment SP; wait for read
 	TOS=MDR;wr ; goto Main1		// Write 
 
-ineg1	H = TOS			// Puts TOS in memory location
+ineg1	H = TOS				// Puts TOS in memory location
 ineg2	MAR = SP			// Store the value SP is pointing to into MAR (Memory)
 ineg3	TOS = MDR = -H; wr; goto Main1	// Negates value on top  of stack and returns to Main1
+
+// If number is even instruction which pops the top 2 values on the stack and pushes the result of the 2 numbers onto the stack
+ifeven1	MAR = SP = TOS; rd			// Read in TOS value
+ifeven2	H = 2					// Set H word 2
+ifeven3	MDR = H = MDR - H			// Subtract TOS value by 2
+ifeven4	N = H; if (N) goto ieT1; else goto ieF1	// Check if subtraction result is negative
+ifeven5	Z = H; if (Z) goto ieT2; else goto ieF2	// Check if subtraction result is zero
+
+ieT1	goto Main1				// N = T; Go return result
+ieF1	goto ieDone 				// N = F; Go test for zero
+
+ieT2	goto branch				// Go return result
+ieF2	goto ifeven3				// Branch to ifeven to loop again
+
+branch	goto goto1				// Go to 16-bit offset if TOS is even
+
+ieDone	goto Main1				// Go to main

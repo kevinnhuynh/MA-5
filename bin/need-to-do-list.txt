@@ -1,6 +1,36 @@
 Ass5 Need-to-Finish:
 
-ijvm.conf:	Comment line 26
 
-mic1ijvm.mal:	Comment lines 240-242
+Part 1:
 
+main method(wherever it is):	Calls power(base, power)
+				Comment on implemented lines
+
+power.jas:		power(base, power): Get 2 numbers (base and power) then call imul(base, base) in a loop for <power> times.
+			imul(mcd, mpr):	Get 2 numbers (multiplicand(mcd) and multiplier(mpr)) and add <mcd> to itself in a loop for <mpr> times (AKA. Translate the code given on assignment).
+			Return <base>^<power>
+			Comment on implemented lines
+
+
+Part 2:
+
+test.jas:		Tests:	power
+				ifeven
+			Comment on implemented lines
+
+ijvm.conf:		Add "0x74 ineg" ***DONE***
+			Comment line 26 ***DONE***
+			Add power call
+			Add ifeven call
+			Comment on implemented lines
+
+mic1ijvm.mal:		Add "ineg1 H = TOS
+			     ineg2 MAR = SP
+			     ineg3 TOS = MDR = -H; wr; goto Main1" ***DONE***
+			Comment lines 240-242 ***DONE***
+			Add power method (base and power are not negative)
+			power(base, power):	Pops top 2 values on stack and push first to base and second to power
+			Add ifeven <offset(16-bit)> method
+			ifeven <offset(16-bit)>:	Pops top value on stack and if value is even, branch to offset(16-bit)
+			Comment on implemented lines
+			

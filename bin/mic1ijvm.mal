@@ -250,12 +250,10 @@ ifeven3	MDR = H = MDR - H			// Subtract TOS value by 2
 ifeven4	N = H; if (N) goto ieT1; else goto ieF1	// Check if subtraction result is negative
 ifeven5	Z = H; if (Z) goto ieT2; else goto ieF2	// Check if subtraction result is zero
 
-ieT1	goto Main1				// N = T; Go return result
-ieF1	goto ieDone 				// N = F; Go test for zero
+ieT1	goto Main1				// N = T; Go back to main
+ieF1	goto ifeven5 				// N = F; Go test for zero
 
 ieT2	goto branch				// Go return result
-ieF2	goto ifeven3				// Branch to ifeven to loop again
+ieF2	goto ifeven3				// Branch to ifeven3 to loop again
 
 branch	goto goto1				// Go to 16-bit offset if TOS is even
-
-ieDone	goto Main1				// Go to main

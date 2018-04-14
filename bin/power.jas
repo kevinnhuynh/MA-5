@@ -1,0 +1,88 @@
+.constant
+OBJREF 0x40			// needed for method invokation - see S.C.O. chapter 4
+.end-constant
+
+
+.main				// start of program
+.var
+.end-var
+main:	
+		LDC_W OBJREF
+		BIPUSH 2			//power
+		BIPUSH 4			//base
+		INVOKEVIRTUAL power
+		HALT
+.end-main					//end program
+
+//mwthod power that call multiplication
+.method power(p1,p2)		(3,3)
+.var						// local variables for main program
+base						//
+power						//
+total
+.end-var
+	ILOAD p2				//power
+	DUP
+	ISTORE power
+	ILOAD p1				//base
+	DUP
+	ISTORE base
+
+	DUP
+	//xtra
+	ISTORE total // initialize value to base
+
+//top of the outer loop
+top:
+	LDC_W OBJREF
+	ILOAD base
+	ILOAD total
+	INVOKEVIRTUAL mul		//invoke method mul
+	
+	ISTORE total
+
+	IINC power -1			//decrement b by 1
+	ILOAD power
+	BIPUSH 1				//bit push 1
+	IF_ICMPEQ finish		//if b = 1 then branch to finish
+	//ILOAD power				//store variable b
+
+	//ILOAD base
+	//ILOAD total
+	GOTO top				//else go to top1
+
+finish:	ILOAD total			//load base to top of stack
+		IRETURN
+.end-method
+
+//multiplication method using addition
+.method mul(p1,p2)			//(9,3)
+.var
+multiplicant
+time
+.end-var
+//top of method
+	ILOAD p2		// how wmany times to multiply
+	ISTORE time
+
+	ILOAD p1    /// what gets multiplied
+//top of inititalization of multiplication
+top1:
+	DUP						//duplicate value multiplicant 
+	DUP
+	DUP
+	ISTORE multiplicant		//load variable a in method
+//top of  the inner loop of multiplying
+top2:
+	IADD					//add a to itself
+	ILOAD multiplicant
+	IINC time -1			//decrement time by 1
+	ILOAD time
+	BIPUSH 1				//bit push 1
+	IF_ICMPEQ done			// if time = 1
+
+	GOTO top2				//else loop back to top2
+		
+done:	POP 	
+		IRETURN
+.end-method

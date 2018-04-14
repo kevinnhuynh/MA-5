@@ -244,12 +244,12 @@ ineg2	MAR = SP			// Store the value SP is pointing to into MAR (Memory)
 ineg3	TOS = MDR = -H; wr; goto Main1	// Negates value on top  of stack and returns to Main1
 
 // If number is even instruction which pops the top 2 values on the stack and pushes the result of the 2 numbers onto the stack
-ifeven1	OPC = TOS					// Subtract TOS by itself to get 0
-ifeven2	OPC = OPC - 1				// 
-ifeven3	OPC = OPC - 1				// 
-ifeven5	N = OPC; if (N) goto ieF1; else goto ifeven6	// Check: If negative, then go to main
-ifeven6	Z = OPC; if (Z) goto ieT1; else goto ifeven2	// Check: If zero, then 
+ifeven1	OPC = TOS					// Get value on top of the stack
+ifeven2	OPC = OPC - 1				// Subtract 1
+ifeven3	OPC = OPC - 1				// In total, subtract 2
+ifeven5	N = OPC; if (N) goto ieF1; else goto ifeven6	// Check: If negative, then go to main, else check if zero
+ifeven6	Z = OPC; if (Z) goto ieT1; else goto ifeven2	// Check: If zero(even), then go to 16-bit offset; else go back to subtract 2
 
-ieT1	OPC = PC - 1; fetch; goto goto2	// Same as goto1; needed for target address
+ieT1	OPC = PC - 1; fetch; goto goto2	// Goes to 16-bit offset
 
-ieF1	goto Main1			// Wait for fetch of opcode
+ieF1	goto Main1			// Go back to main
